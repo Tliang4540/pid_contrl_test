@@ -41,11 +41,21 @@ void pid(void)
 }
 
 ```
-
+## 任务划分 ##
+1.喂狗任务：延时1S后初始化PWM参数，定时喂狗和检测按键复位用来烧写程序
+2.PID运算任务：100ms运行一次pid算法调整控制比例
+3.转速打印输出认为：200ms打印一次当前转速
+4.PWM1中断：下降沿输入触发，触发后开启PWM2定时器计时，当第二次触发时根据时间计算转速
+5.PWM2中断：超时，认为转速为0
+6.串口中断：处理串口数据输出，以及数据接收。收到两字节相同数据则设置目标转速
 
 ## 效果展示 ##
 VOFA+显示波形
 ![shot.png][1]
 控制比较稳定，后面波动是加上负载测试稳定性
 
-  [1]: http://101.33.205.183/usr/uploads/2022/04/2347352204.png
+全部源码：[GitHub][2]
+
+
+  [1]: https://github.com/Tliang4540/pid_contrl_test/blob/master/shot.png
+  [2]: https://github.com/Tliang4540/pid_contrl_test
